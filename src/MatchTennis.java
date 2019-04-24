@@ -12,7 +12,6 @@ public class MatchTennis {
     boolean avantageJ1 = false;
     boolean avantageJ2 = false;
 
-
     void gainPointJ1() {//gestion du score Joueur 1
         if (isP1playing && isP2playing) {
             if (pointJ1 == 0 || pointJ1 < 3) {// augmentation d'un point
@@ -50,8 +49,8 @@ public class MatchTennis {
                 avantageJ2 = false;
             } else if (egalité && pointJ2 == pointJ1 + 1) {//condition d'Avantage
                 egalité = false;
-                avantageJ1 = true;
-                avantageJ2 = false;
+                avantageJ2 = true;
+                avantageJ1 = false;
             } else if (avantageJ2) {// gain de jeu
                 nbreJeuJ2++;
                 pointJ1 = 0;
@@ -67,18 +66,16 @@ public class MatchTennis {
         }
     }
 
-
     void abandonJ1() {
         isP1playing = false;
     }
-
 
     void abandonJ2() {
         isP2playing = false;
     }
 
     public String toString() {
-        int scoreJeuJ1;
+        int scoreJeuJ1 = 0;
         switch (pointJ1) {
             case 0:
                 scoreJeuJ1 = 0;
@@ -93,7 +90,7 @@ public class MatchTennis {
                 scoreJeuJ1 = 40;
                 break;
         }
-        int scoreJeuJ2;
+        int scoreJeuJ2 = 0;
         switch (pointJ2) {
             case 0:
                 scoreJeuJ1 = 0;
@@ -108,23 +105,30 @@ public class MatchTennis {
                 scoreJeuJ1 = 40;
                 break;
         }
+        if (isMatchInProgress) {
 
-
-            if (isMatchInProgress) {
-
-                if (avantageJ1) {
-                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur1;
-
-                } else if (avantageJ2) {
-                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur2;
-
-                } else {
-                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2;
-
-                }
-            }else{
-                return nbreJeuJ1+" : " + nbreJeuJ2 ;
+            if (avantageJ1) {
+                return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur1;
+            } else if (avantageJ2) {
+                return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur2;
+            } else {
+                return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2;
             }
+
+        } else {
+
+            if (!isP2playing) {
+                return nbreJeuJ1 + " : " + nbreJeuJ2 + "Abandon J2 - Victoire J1";
+            } else if (!isP1playing) {
+                return nbreJeuJ1 + " : " + nbreJeuJ2 + "Abandon J1 - Victoire J2";
+            } else {
+                return nbreJeuJ1 + " : " + nbreJeuJ2;
+            }
+        }
     }
+
 }
+
+
+
 
