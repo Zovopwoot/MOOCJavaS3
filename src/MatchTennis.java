@@ -1,13 +1,13 @@
 public class MatchTennis {
     String joueur1;
     String joueur2;
-    boolean isMatchInProgress =true;
+    boolean isMatchInProgress = true;
     boolean isP1playing = true;
     boolean isP2playing = true;
-    int scorePointJ1;
-    int scorePointJ2;
-    int scoreMancheJ1;
-    int scoreMancheJ2;
+    int pointJ1 = 0;
+    int pointJ2 = 0;
+    int nbreJeuJ1 = 0;
+    int nbreJeuJ2 = 0;
     boolean egalité = false;
     boolean avantageJ1 = false;
     boolean avantageJ2 = false;
@@ -15,53 +15,52 @@ public class MatchTennis {
 
     void gainPointJ1() {//gestion du score Joueur 1
         if (isP1playing && isP2playing) {
-            if (scorePointJ1 == 0 || scorePointJ1 < 3) {// augmentation d'un point
-                scorePointJ1++;
-            } else if (scorePointJ1 >= 3 && scorePointJ2 >= 3 && scorePointJ1 == scorePointJ2) { //conditions d'Egalité
+            if (pointJ1 == 0 || pointJ1 < 3) {// augmentation d'un point
+                pointJ1++;
+            } else if (pointJ1 >= 3 && pointJ2 >= 3 && pointJ1 == pointJ2) { //conditions d'Egalité
                 egalité = true;
                 avantageJ1 = false;
                 avantageJ2 = false;
-            } else if (egalité && scorePointJ1 == scorePointJ2 + 1) {//condition d'Avantage
+            } else if (egalité && pointJ1 == pointJ2 + 1) {//condition d'Avantage
                 egalité = false;
                 avantageJ1 = true;
                 avantageJ2 = false;
             } else if (avantageJ1) { // gain de jeu
-                scoreMancheJ1++;
-                scorePointJ1 = 0;
-                scorePointJ2 = 0;
+                nbreJeuJ1++;
+                pointJ1 = 0;
+                pointJ2 = 0;
                 egalité = false;
                 avantageJ1 = false;
-                if (scoreMancheJ1 >= 6 && scoreMancheJ1 >= scoreMancheJ2 + 2) { //victoire J1
+                if (nbreJeuJ1 >= 6 && nbreJeuJ1 >= nbreJeuJ2 + 2) { //victoire J1
                     abandonJ2();
-                    isMatchInProgress =false ;
+                    isMatchInProgress = false;
                 }
             }
         }
     }
 
-
-    void gainPointJ2(){
+    void gainPointJ2() {
 
         if (isP1playing && isP2playing) {
-            if (scorePointJ2 == 0 || scorePointJ2 < 3) {// augmentation d'un point
-                scorePointJ2++;
-            } else if (scorePointJ2 >= 3 && scorePointJ1 >= 3 && scorePointJ1 == scorePointJ2) { //conditions d'Egalité
+            if (pointJ2 == 0 || pointJ2 < 3) {// augmentation d'un point
+                pointJ2++;
+            } else if (pointJ2 >= 3 && pointJ1 >= 3 && pointJ1 == pointJ2) { //conditions d'Egalité
                 egalité = true;
                 avantageJ1 = false;
                 avantageJ2 = false;
-            } else if (egalité && scorePointJ2 == scorePointJ1 + 1) {//condition d'Avantage
+            } else if (egalité && pointJ2 == pointJ1 + 1) {//condition d'Avantage
                 egalité = false;
                 avantageJ1 = true;
                 avantageJ2 = false;
             } else if (avantageJ2) {// gain de jeu
-                scoreMancheJ2++;
-                scorePointJ1 = 0;
-                scorePointJ2 = 0;
+                nbreJeuJ2++;
+                pointJ1 = 0;
+                pointJ2 = 0;
                 egalité = false;
                 avantageJ1 = false;
                 avantageJ2 = false;
             }
-            if (scoreMancheJ2 >= 6 && scoreMancheJ1 >= scoreMancheJ1 + 2) { //victoire J2
+            if (nbreJeuJ2 >= 6 && nbreJeuJ1 >= nbreJeuJ1 + 2) { //victoire J2
                 abandonJ1();
                 isMatchInProgress = false;
             }
@@ -78,11 +77,54 @@ public class MatchTennis {
         isP2playing = false;
     }
 
-    String toString() {
-        String score
+    public String toString() {
+        int scoreJeuJ1;
+        switch (pointJ1) {
+            case 0:
+                scoreJeuJ1 = 0;
+                break;
+            case 1:
+                scoreJeuJ1 = 15;
+                break;
+            case 2:
+                scoreJeuJ1 = 30;
+                break;
+            case 3:
+                scoreJeuJ1 = 40;
+                break;
+        }
+        int scoreJeuJ2;
+        switch (pointJ2) {
+            case 0:
+                scoreJeuJ1 = 0;
+                break;
+            case 1:
+                scoreJeuJ1 = 15;
+                break;
+            case 2:
+                scoreJeuJ1 = 30;
+                break;
+            case 3:
+                scoreJeuJ1 = 40;
+                break;
+        }
+
+
+            if (isMatchInProgress) {
+
+                if (avantageJ1) {
+                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur1;
+
+                } else if (avantageJ2) {
+                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2 + " / Avantage : " + joueur2;
+
+                } else {
+                    return nbreJeuJ1 + " : " + nbreJeuJ2 + " / " + scoreJeuJ1 + " : " + scoreJeuJ2;
+
+                }
+            }else{
+                return nbreJeuJ1+" : " + nbreJeuJ2 ;
+            }
     }
-
-
 }
-
 
