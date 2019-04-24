@@ -73,7 +73,6 @@ public class MatchTennis {
     void abandonJ2() {
         isP2playing = false;
     }
-
     public String toString() {
         int scoreJeuJ1 = 0;
         switch (pointJ1) {
