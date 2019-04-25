@@ -1,6 +1,6 @@
 public class MatchTennis {
-    String joueur1 = new String();
-    String joueur2 = new String();
+    String joueur1 = "";
+    String joueur2 = "";
     private boolean isMatchInProgress = true;
     private boolean isP1playing = true;
     private boolean isP2playing = true;
@@ -13,42 +13,48 @@ public class MatchTennis {
     private boolean avantageJ2 = false;
 
     public void gainPointJ1() {//gestion du score Joueur 1
+
         if (isMatchInProgress) {
-            if (pointJ1 == 0 || pointJ1 < 3) {// augmentation d'un point
+            if (pointJ1 <= 3) {// augmentation d'un point
                 pointJ1++;
-            }else if(pointJ1>=3 && pointJ2<3){ // gain de jeu
+            } else if (pointJ1>3 && pointJ2 <= 2) { // gain de jeu
                 nbreJeuJ1++;
-                pointJ1 =0;
-                pointJ2 =0;
-            }
-            else if (pointJ2 >= 3 && pointJ1 == pointJ2) { //conditions d'Egalité
-                egalité = true;
-                avantageJ1 = false;
-                avantageJ2 = false;
-            } else if (egalité && pointJ1 == pointJ2 + 1) {//condition d'Avantage
-                egalité = false;
-                avantageJ1 = true;
-                avantageJ2 = false;
+                pointJ1 = 0;
+                pointJ2 = 0;
             } else if (avantageJ1) { // gain de jeu
                 nbreJeuJ1++;
                 pointJ1 = 0;
                 pointJ2 = 0;
                 egalité = false;
                 avantageJ1 = false;
-                if (nbreJeuJ1 >= 6 && nbreJeuJ1 >= nbreJeuJ2 + 2) { //victoire J1
-                    abandonJ2();
-                    isMatchInProgress = false;
-                }
+
+            } else if ( avantageJ2 ) { //conditions d'Egalité
+                egalité = true;
+                avantageJ1 = false;
+                avantageJ2 = false;
+            } else if (pointJ1 == 4 ||egalité) {//condition d'Avantage
+                egalité = false;
+                avantageJ1 = true;
+                avantageJ2 = false;
             }
+            if (nbreJeuJ1 >= 6 && nbreJeuJ1 >= nbreJeuJ2 + 2) { //victoire J1
+                abandonJ2();
+                isMatchInProgress = false; // match terminé
+            }
+
         }
     }
 
     public void gainPointJ2() {
 
         if (isMatchInProgress) {
-            if (pointJ2 == 0 || pointJ2 < 3) {// augmentation d'un point
+            if (pointJ2 == 0 || pointJ2 <= 3) {// augmentation d'un point
                 pointJ2++;
-            } else if (pointJ2 >= 3 && pointJ1 >= 3 && pointJ1 == pointJ2) { //conditions d'Egalité
+            } else if ( pointJ1 < 3) { // gain de jeu
+                nbreJeuJ2++;
+                pointJ1 = 0;
+                pointJ2 = 0;
+            } else if ( pointJ1 == pointJ2) { //conditions d'Egalité
                 egalité = true;
                 avantageJ1 = false;
                 avantageJ2 = false;
@@ -64,22 +70,24 @@ public class MatchTennis {
                 avantageJ1 = false;
                 avantageJ2 = false;
             }
-            if (nbreJeuJ2 >= 6 && nbreJeuJ1 >= nbreJeuJ1 + 2) { //victoire J2
+            if (nbreJeuJ2 >= 6 && nbreJeuJ2 >= nbreJeuJ1 + 2) { //victoire J2
                 abandonJ1();
                 isMatchInProgress = false;
             }
+
         }
     }
 
     public void abandonJ1() {
         isP1playing = false;
-        isMatchInProgress =false;
+        isMatchInProgress = false;
     }
 
     public void abandonJ2() {
         isP2playing = false;
         isMatchInProgress = false;
     }
+
     @Override
     public String toString() {
 
@@ -101,16 +109,16 @@ public class MatchTennis {
         int scoreJeuJ2 = 0;
         switch (pointJ2) {
             case 0:
-                scoreJeuJ1 = 0;
+                scoreJeuJ2 = 0;
                 break;
             case 1:
-                scoreJeuJ1 = 15;
+                scoreJeuJ2 = 15;
                 break;
             case 2:
-                scoreJeuJ1 = 30;
+                scoreJeuJ2 = 30;
                 break;
             case 3:
-                scoreJeuJ1 = 40;
+                scoreJeuJ2 = 40;
                 break;
         }
         if (isMatchInProgress) {
