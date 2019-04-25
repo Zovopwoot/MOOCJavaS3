@@ -80,8 +80,9 @@ public class MatchTennis {
         isP2playing = false;
         isMatchInProgress = false;
     }
-
+    @Override
     public String toString() {
+
         int scoreJeuJ1 = 0;
         switch (pointJ1) {
             case 0:
@@ -115,21 +116,21 @@ public class MatchTennis {
         if (isMatchInProgress) {
 
             if (avantageJ1) {
-                return nbreJeuJ1 + " - " + nbreJeuJ2 + "  " + scoreJeuJ1 + " - " + scoreJeuJ2 + " / Avantage : " + joueur1;
+                return nbreJeuJ1 + "-" + nbreJeuJ2 + "  " + scoreJeuJ1 + "-" + scoreJeuJ2 + " / Avantage : " + joueur1;
             } else if (avantageJ2) {
-                return nbreJeuJ1 + " - " + nbreJeuJ2 + "  " + scoreJeuJ1 + " - " + scoreJeuJ2 + " / Avantage : " + joueur2;
+                return nbreJeuJ1 + "-" + nbreJeuJ2 + "  " + scoreJeuJ1 + "-" + scoreJeuJ2 + " / Avantage : " + joueur2;
             } else {
-                return nbreJeuJ1 + " - " + nbreJeuJ2 + " " + scoreJeuJ1 + " - " + scoreJeuJ2;
+                return nbreJeuJ1 + "-" + nbreJeuJ2 + " " + scoreJeuJ1 + "-" + scoreJeuJ2;
             }
 
         } else {
 
             if (!isP2playing) {
-                return nbreJeuJ1 + " - " + nbreJeuJ2 + "Abandon J2 - Victoire J1";
+                return nbreJeuJ1 + "-" + nbreJeuJ2 + "Abandon J2 - Victoire J1";
             } else if (!isP1playing) {
-                return nbreJeuJ1 + " - " + nbreJeuJ2 + "Abandon J1 - Victoire J2";
+                return nbreJeuJ1 + "-" + nbreJeuJ2 + "Abandon J1 - Victoire J2";
             } else {
-                return nbreJeuJ1 + " - " + nbreJeuJ2;
+                return nbreJeuJ1 + "-" + nbreJeuJ2;
             }
         }
     }
