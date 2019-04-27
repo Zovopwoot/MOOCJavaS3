@@ -17,7 +17,7 @@ public class MatchTennis {
         if (isMatchInProgress) {
             if (pointJ1 <= 3) {// augmentation d'un point
                 pointJ1++;
-            } else if (pointJ1>3 && pointJ2 <= 2) { // gain de jeu
+            } else if (pointJ1 > 3 && pointJ2 <= 2) { // gain de jeu
                 nbreJeuJ1++;
                 pointJ1 = 0;
                 pointJ2 = 0;
@@ -28,11 +28,11 @@ public class MatchTennis {
                 egalité = false;
                 avantageJ1 = false;
 
-            } else if ( avantageJ2 ) { //conditions d'Egalité
+            } else if (avantageJ2) { //conditions d'Egalité
                 egalité = true;
                 avantageJ1 = false;
                 avantageJ2 = false;
-            } else if (pointJ1 == 4 ||egalité) {//condition d'Avantage
+            } else if (pointJ1 == 4 || egalité) {//condition d'Avantage
                 egalité = false;
                 avantageJ1 = true;
                 avantageJ2 = false;
@@ -48,20 +48,12 @@ public class MatchTennis {
     public void gainPointJ2() {
 
         if (isMatchInProgress) {
-            if (pointJ2 == 0 || pointJ2 <= 3) {// augmentation d'un point
+            if (pointJ2 <= 3) {// augmentation d'un point
                 pointJ2++;
-            } else if ( pointJ1 < 3) { // gain de jeu
+            } else if (pointJ2 > 3 && pointJ1 <= 2) { // gain de jeu
                 nbreJeuJ2++;
                 pointJ1 = 0;
                 pointJ2 = 0;
-            } else if ( pointJ1 == pointJ2) { //conditions d'Egalité
-                egalité = true;
-                avantageJ1 = false;
-                avantageJ2 = false;
-            } else if (egalité && pointJ2 == pointJ1 + 1) {//condition d'Avantage
-                egalité = false;
-                avantageJ2 = true;
-                avantageJ1 = false;
             } else if (avantageJ2) {// gain de jeu
                 nbreJeuJ2++;
                 pointJ1 = 0;
@@ -69,6 +61,14 @@ public class MatchTennis {
                 egalité = false;
                 avantageJ1 = false;
                 avantageJ2 = false;
+            } else if (avantageJ1) { //conditions d'Egalité
+                egalité = true;
+                avantageJ1 = false;
+                avantageJ2 = false;
+            } else if (pointJ2 == 4 || egalité) {//condition d'Avantage
+                egalité = false;
+                avantageJ2 = true;
+                avantageJ1 = false;
             }
             if (nbreJeuJ2 >= 6 && nbreJeuJ2 >= nbreJeuJ1 + 2) { //victoire J2
                 abandonJ1();
