@@ -1,97 +1,93 @@
 public class MatchTennis {
-    String joueur1 = "Joueur 1";
-    String joueur2 = "Joueur 2";
     private boolean isMatchInProgress = true;
     private boolean isP1playing = true;
     private boolean isP2playing = true;
-    private int pointJ1 = 0;
-    private int pointJ2 = 0;
-    private int nbreJeuJ1 = 0;
-    private int nbreJeuJ2 = 0;
-    private boolean egalité = false;
-    private boolean avantageJ1 = false;
-    private boolean avantageJ2 = false;
+    private int p1Score = 0;
+    private int p2Score = 0;
+    private int j1SetCounter = 0;
+    private int j2SetCounter = 0;
+    private boolean equality = false;
+    private boolean p1Advantage = false;
+    private boolean p2advantage = false;
 
-    public void gainPointJ1() {//gestion du score Joueur 1
+    public void incrementScoreP1() {//gestion du score Joueur 1
 
         if (isMatchInProgress) {
-            if (pointJ1 <3) {// augmentation d'un point
-                pointJ1++;
-            } else if (pointJ2 <= 2) { // gain de jeu
-                nbreJeuJ1++;
-                pointJ1 = 0;
-                pointJ2 = 0;
-            } else if (avantageJ1) { // gain de jeu
-                nbreJeuJ1++;
-                pointJ1 = 0;
-                pointJ2 = 0;
-                egalité = false;
-                avantageJ1 = false;
-            } else if (avantageJ2) { //conditions d'Egalité
-                egalité = true;
-                avantageJ1 = false;
-                avantageJ2 = false;
-            } else if (pointJ1 == 3 || egalité) {//condition d'Avantage
-                egalité = false;
-                avantageJ1 = true;
-                avantageJ2 = false;
+            if (p1Score < 3) {// augmentation d'un point
+                p1Score++;
+            } else if (p2Score <= 2) { // gain de jeu
+                j1SetCounter++;
+                p1Score = 0;
+                p2Score = 0;
+            } else if (p1Advantage) { // gain de jeu
+                j1SetCounter++;
+                p1Score = 0;
+                p2Score = 0;
+                equality = false;
+                p1Advantage = false;
+            } else if (p2advantage) { //conditions d'Egalité
+                equality = true;
+                p2advantage = false;
+            } else if (p1Score == 3 || equality) {//condition d'Avantage
+                equality = false;
+                p1Advantage = true;
             }
-            if (nbreJeuJ1 >= 6 && nbreJeuJ1 >= nbreJeuJ2 + 2) { //victoire J1
-                abandonJ2();
+            if (j1SetCounter >= 6 && j1SetCounter >= j2SetCounter + 2) { //victoire J1
+                p2GiveUp();
                 isMatchInProgress = false; // match terminé
             }
         }
     }
 
-    public void gainPointJ2() {
+    public void incrementScorep2() {
 
         if (isMatchInProgress) {
-            if (pointJ2 < 3) {// augmentation d'un point
-                pointJ2++;
-            } else if (pointJ1 <= 2) { // gain de jeu
-                nbreJeuJ2++;
-                pointJ1 = 0;
-                pointJ2 = 0;
-            } else if (avantageJ2) {// gain de jeu
-                nbreJeuJ2++;
-                pointJ1 = 0;
-                pointJ2 = 0;
-                egalité = false;
-                avantageJ1 = false;
-                avantageJ2 = false;
-            } else if (avantageJ1) { //conditions d'Egalité
-                egalité = true;
-                avantageJ1 = false;
-                avantageJ2 = false;
-            } else if (pointJ2 == 3 || egalité) {//condition d'Avantage
-                egalité = false;
-                avantageJ2 = true;
-                avantageJ1 = false;
+            if (p2Score < 3) {// augmentation d'un point
+                p2Score++;
+            } else if (p1Score <= 2) { // gain de jeu
+                j2SetCounter++;
+                p1Score = 0;
+                p2Score = 0;
+            } else if (p2advantage) {// gain de jeu
+                j2SetCounter++;
+                p1Score = 0;
+                p2Score = 0;
+                equality = false;
+                p1Advantage = false;
+                p2advantage = false;
+            } else if (p1Advantage) { //conditions d'Egalité
+                equality = true;
+                p1Advantage = false;
+            } else if (p2Score == 3 || equality) {//condition d'Avantage
+                equality = false;
+                p2advantage = true;
             }
-            if (nbreJeuJ2 >= 6 && nbreJeuJ2 >= nbreJeuJ1 + 2) { //victoire J2
-                abandonJ1();
+            if (j2SetCounter >= 6 && j2SetCounter >= j1SetCounter + 2) { //victoire J2
+                p1GiveUp();
                 isMatchInProgress = false;
             }
-        }else{
+        } else {
             System.out.println("Modification du score impossible");
         }
     }
 
-    public void abandonJ1() {
+    public void p1GiveUp() {
         isP1playing = false;
         isMatchInProgress = false;
     }
 
-    public void abandonJ2() {
+    public void p2GiveUp() {
         isP2playing = false;
         isMatchInProgress = false;
     }
 
     @Override
     public String toString() {
+        String playerOne = "Joueur 1";
+        String playerTwo = "Joueur 2";
 
         int scoreJeuJ1 = 0;
-        switch (pointJ1) {
+        switch (p1Score) {
             case 0:
                 scoreJeuJ1 = 0;
                 break;
@@ -106,7 +102,7 @@ public class MatchTennis {
                 break;
         }
         int scoreJeuJ2 = 0;
-        switch (pointJ2) {
+        switch (p2Score) {
             case 0:
                 scoreJeuJ2 = 0;
                 break;
@@ -121,22 +117,22 @@ public class MatchTennis {
                 break;
         }
         if (isMatchInProgress) {
-            if (avantageJ1) {
-                return nbreJeuJ1 + "-" + nbreJeuJ2 +" Avantage : " + joueur1;
-            } else if (avantageJ2) {
-                return nbreJeuJ1 + "-" + nbreJeuJ2 +" Avantage : " + joueur2;
+            if (p1Advantage) {
+                return j1SetCounter + "-" + j2SetCounter + " Avantage : " + playerOne;
+            } else if (p2advantage) {
+                return j1SetCounter + "-" + j2SetCounter + " Avantage : " + playerTwo;
             } else {
-                return nbreJeuJ1 + "-" + nbreJeuJ2 + " " + scoreJeuJ1 + "-" + scoreJeuJ2;
+                return j1SetCounter + "-" + j2SetCounter + " " + scoreJeuJ1 + "-" + scoreJeuJ2;
             }
-
         } else {
-
-            if (!isP2playing) {
-                return nbreJeuJ1 + "-" + nbreJeuJ2 + "Abandon J2 - Victoire J1";
-            } else if (!isP1playing) {
-                return nbreJeuJ1 + "-" + nbreJeuJ2 + "Abandon J1 - Victoire J2";
+            if (isP2playing) {
+                if (isP1playing) {
+                    return j1SetCounter + "-" + j2SetCounter;
+                } else {
+                    return j1SetCounter + "-" + j2SetCounter + "Abandon" + playerOne + " - Victoire" + playerTwo;
+                }
             } else {
-                return nbreJeuJ1 + "-" + nbreJeuJ2;
+                return j1SetCounter + "-" + j2SetCounter + "Abandon" + playerTwo + " - Victoire " + playerOne;
             }
         }
     }
